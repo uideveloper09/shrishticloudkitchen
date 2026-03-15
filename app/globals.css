@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Shrishti Cloud Kitchen – warm earthy theme */
+  --primary: #b22222;
+  --primary-hover: #9a1d1d;
+  --primary-foreground: #ffffff;
+  --secondary: #f5efe6;
+  --accent: #5c3a21;
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-lato), "Lato", system-ui, sans-serif;
+}
+
+/* Critical base styles so UI is never unstyled */
+html {
+  -webkit-text-size-adjust: 100%;
+  background-color: var(--secondary);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--secondary);
+  color: var(--accent);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Prevent links from default purple/blue when Tailwind loads late */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+/* Base button reset */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+@layer base {
+  * {
+    @apply border-accent/10;
+  }
+}

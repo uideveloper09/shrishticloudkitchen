@@ -1,0 +1,84 @@
+---
+description: Brand logo is fixed; must not be regenerated or modified by AI. Header 64px, logo 40px display.
+globs: 
+alwaysApply: true
+---
+
+# IMPORTANT BRAND RULE
+
+The project already has a brand logo.
+
+Do NOT redesign, regenerate, crop, recolor, or replace the logo.
+
+Always use the **existing logo file only**.
+
+**Logo file path:** `/public/logo.png`
+
+This is the official brand logo for **Shrishti Cloud Kitchen** and must remain unchanged.
+
+---
+
+# HEADER REQUIREMENT
+
+The website header height is **64px** (`h-16`).
+
+Adjust the display of the logo so it fits properly inside the navbar while keeping the original logo file untouched.
+
+**Implementation rules:**
+
+1. Do NOT modify the logo image.
+2. Do NOT create a new logo.
+3. Do NOT crop the tagline from the logo.
+4. Only control the **display size using CSS or Tailwind classes**.
+
+**Navbar layout:**
+
+- Left: Logo
+- Center: Navigation (Home, Menu, Gallery, Order)
+- Right: Cart icon, Sign up, Login button
+
+---
+
+# LOGO DISPLAY SETTINGS
+
+Use the following display rules:
+
+- **Logo height:** 40px (`h-10`)
+- **Width:** auto (`w-auto`)
+- **Object fit:** contain (`object-contain`)
+
+Example using Next.js Image component:
+
+```tsx
+<Image
+  src="/logo.png"
+  alt="Shrishti Cloud Kitchen"
+  width={180}
+  height={48}
+  className="h-10 w-auto object-contain"
+/>
+```
+
+---
+
+# HEADER STRUCTURE
+
+```html
+<header class="h-16 flex items-center ... px-6 bg-[#f5efe6]">
+  Left section → logo
+  Center → navigation links
+  Right → cart icon + auth buttons
+</header>
+```
+
+---
+
+# FINAL RULE
+
+Never regenerate or redesign the logo.
+
+Always reuse `/public/logo.png` exactly as it exists.
+
+**/* BRAND LOGO IS FIXED - DO NOT MODIFY */**
+
+The Shrishti Cloud Kitchen logo is a fixed brand asset. AI tools must not regenerate or replace it.
