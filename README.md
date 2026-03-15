@@ -21,13 +21,6 @@ _Add screenshots of your site here (e.g. Home, Menu, Cart). Upload images to the
 
 ## Tech Stack
 
-<<<<<<< HEAD
-- Next.js 14 (App Router) · React · Tailwind CSS · Radix UI
-- Zustand (cart) · NextAuth (Email + Google) · Razorpay (payments)
-
-## Getting Started
-
-=======
 - **Next.js 14** (App Router)
 - **React** + **Tailwind CSS**
 - **Shadcn-style UI** (Radix primitives + Tailwind)
@@ -40,14 +33,10 @@ _Add screenshots of your site here (e.g. Home, Menu, Cart). Upload images to the
 
 ### 1. Install dependencies
 
->>>>>>> 5b2e4bc (Initial commit)
 ```bash
 npm install
 ```
 
-<<<<<<< HEAD
-Copy `.env.example` to `.env.local` and add `NEXTAUTH_SECRET`, `NEXTAUTH_URL`, Razorpay keys. Optional: Google OAuth keys.
-=======
 ### 2. Environment variables
 
 Copy `.env.example` to `.env.local` and fill in:
@@ -60,26 +49,12 @@ Copy `.env.example` to `.env.local` and fill in:
 **Demo login:** Any email with password `password` works (credentials provider).
 
 ### 3. Run development server
->>>>>>> 5b2e4bc (Initial commit)
 
 ```bash
 npm run dev
 ```
 
 <<<<<<< HEAD
-Open [http://localhost:3000](http://localhost:3000). Demo login: any email + password `password`.
-
-## Features
-
-- **Home** — Hero, popular parathas, about, gallery
-- **Menu** — Full menu, Add to Cart, filters
-- **Order / Checkout** — Cart, Razorpay or COD, order success
-- **Login** — Email + Google; Order history; Admin panel (`/admin`)
-
-## Deploy (Vercel)
-
-Push to GitHub → Import in Vercel → Add env vars → Deploy.
-=======
 Open [http://localhost:3000](http://localhost:3000).
 
 ## Features
@@ -127,7 +102,6 @@ _After deployment, add your live link here:_
 <!-- **Live site:** https://shrishticloudkitchen.vercel.app -->
 
 ---
->>>>>>> 5b2e4bc (Initial commit)
 
 ## License
 
