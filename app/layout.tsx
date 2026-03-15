@@ -25,8 +25,9 @@ export const metadata: Metadata = {
   title: "Shrishti Cloud Kitchen – Homemade Paratha Delivery",
   description:
     "Order fresh homemade parathas online. Aloo, Paneer, Sattu and more.",
-  /* BRAND LOGO IS FIXED - DO NOT MODIFY */ icons: {
-    icon: imgPath("@/logo.png"),
+  icons: {
+    icon: imgPath("@/images/logo.png"),
+    apple: imgPath("@/images/logo.png"),
   },
   openGraph: {
     title: "Shrishti Cloud Kitchen – Homemade Paratha Delivery",
