@@ -46,7 +46,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col bg-secondary text-accent font-sans" style={{ backgroundColor: "#f5efe6", color: "#5c3a21" }}>
         <Providers>
           <Navbar />
-          <main className="flex-1 w-full">{children}</main>
+          <main className="flex-1 w-full min-w-0 overflow-x-hidden">{children}</main>
           <Footer />
           <ScrollToTop />
           <Toaster />

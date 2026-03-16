@@ -11,9 +11,9 @@ const HERO_IMAGE =
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="w-full min-w-0 overflow-x-hidden">
       {/* Hero – image with red overlay, title, subtitle, Zomato + Swiggy */}
-      <section className="relative min-h-[70vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[70vh] w-full min-w-0 flex items-center overflow-hidden">
         <Image
           src={HERO_IMAGE}
           alt="Fresh homemade parathas"
@@ -28,8 +28,8 @@ export default function HomePage() {
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 20c-2 0-4 1.5-4 4s2 4 4 4 4-1.5 4-4-2-4-4-4zm0 10c-2 0-4 1.5-4 4s2 4 4 4 4-1.5 4-4-2-4-4-4z' fill='%23fff' fill-opacity='0.06'/%3E%3C/svg%3E")`,
           }}
         />
-        <div className="container relative z-10 mx-auto px-6 py-16">
-          <div className="max-w-2xl">
+        <div className="container relative z-10 mx-auto w-full max-w-full px-4 sm:px-6 py-16">
+          <div className="max-w-2xl w-full">
             <AnimateIn animation="fade-in-up" delay={0}>
               <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
                 Shrishti Cloud Kitchen
