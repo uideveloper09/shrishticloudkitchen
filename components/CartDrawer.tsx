@@ -54,17 +54,20 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
           </div>
           <div className="flex-1 overflow-y-auto p-4">
             {items.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center text-accent/70">
-                <ShoppingBag className="mb-4 h-16 w-16 opacity-40" />
-                <p>Your cart is empty</p>
+              <div className="flex flex-col items-center justify-center py-12 px-4 text-center text-accent/80">
+                <ShoppingBag className="mb-4 h-16 w-16 text-accent/25" aria-hidden />
+                <p className="font-medium text-accent text-lg">Your cart is empty</p>
+                <p className="mt-2 text-sm text-accent/65 max-w-xs">
+                  Pick parathas from the menu — they&apos;ll show up here. 100% vegetarian.
+                </p>
                 <Button
-                  className="mt-4"
+                  className="mt-6 min-h-11 px-6 bg-[#b22222] hover:bg-[#9a1d1d] text-white"
                   onClick={() => {
                     onOpenChange(false);
                     router.push("/menu");
                   }}
                 >
-                  Browse Menu
+                  Browse menu
                 </Button>
               </div>
             ) : (

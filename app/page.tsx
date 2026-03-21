@@ -5,6 +5,7 @@ import { AnimateIn } from "@/components/AnimateIn";
 import { popularParathas } from "@/lib/menu-data";
 import { formatPrice, imgPath } from "@/lib/utils";
 import { Leaf } from "lucide-react";
+import { TrustStrip } from "@/components/TrustStrip";
 
 /** Local file in public/images/banner — use / path; no ?w=&q= (those only apply to remote/CDN URLs) */
 const HERO_IMAGE = imgPath("@/images/banner/banner1.png");
@@ -94,6 +95,12 @@ export default function HomePage() {
           />
         </svg>
       </div>
+
+      <section className="bg-secondary py-6 border-b border-[#5c3a21]/08">
+        <div className="container mx-auto px-4 sm:px-6">
+          <TrustStrip className="text-xs sm:text-sm" />
+        </div>
+      </section>
 
       {/* Popular Parathas – 3 cards */}
       <section className="bg-secondary py-16">

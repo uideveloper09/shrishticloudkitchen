@@ -1,6 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Lato } from "next/font/google";
-import { Toaster } from "@/components/ui/toaster";
 import { imgPath } from "@/lib/utils";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
@@ -25,15 +24,25 @@ export const metadata: Metadata = {
   title: "Shrishti Cloud Kitchen – Homemade Paratha Delivery",
   description:
     "Order fresh homemade parathas online. Aloo, Paneer, Sattu and more.",
+  manifest: "/manifest.json",
   icons: {
     icon: imgPath("@/images/logo.png"),
     apple: imgPath("@/images/logo.png"),
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Shrishti Cloud Kitchen",
   },
   openGraph: {
     title: "Shrishti Cloud Kitchen – Homemade Paratha Delivery",
     description:
       "Order fresh homemade parathas online. Aloo, Paneer, Sattu and more.",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#b22222",
 };
 
 export default function RootLayout({
@@ -49,7 +58,6 @@ export default function RootLayout({
           <main className="flex-1 w-full min-w-0 overflow-x-hidden">{children}</main>
           <Footer />
           <ScrollToTop />
-          <Toaster />
         </Providers>
       </body>
     </html>

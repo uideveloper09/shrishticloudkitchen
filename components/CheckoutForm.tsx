@@ -10,6 +10,7 @@ import { useCartStore } from "@/store/cart-store";
 import { DELIVERY_CHARGE } from "@/lib/constants";
 import { loadRazorpayScript, createRazorpayOrder } from "@/lib/razorpay";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/components/providers/toast-provider";
 
 interface FormData {
   name: string;
@@ -25,8 +26,10 @@ interface CheckoutFormProps {
 
 export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
   const router = useRouter();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const items = useCartStore((s) => s.items);
   const getSubtotal = useCartStore((s) => s.getSubtotal);
   const getItemCount = useCartStore((s) => s.getItemCount);
@@ -44,38 +47,33 @@ export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
   const itemCount = getItemCount();
   const total = subtotal + (itemCount > 0 ? DELIVERY_CHARGE : 0);
 
-  const update = (key: keyof FormData, value: string) =>
+  const update = (key: keyof FormData, value: string) => {
+    setFieldErrors((e) => ({ ...e, [key]: undefined }));
     setForm((f) => ({ ...f, [key]: value }));
+  };
 
   const validate = (): boolean => {
-    if (!form.name.trim()) {
-      setError("Please enter your name.");
-      return false;
-    }
-    if (!form.phone.trim()) {
-      setError("Please enter your phone number.");
-      return false;
-    }
-    if (!form.address.trim()) {
-      setError("Please enter your address.");
-      return false;
-    }
-    if (!form.city.trim()) {
-      setError("Please enter your city.");
-      return false;
-    }
-    if (!form.pincode.trim() || form.pincode.length !== 6) {
-      setError("Please enter a valid 6-digit pincode.");
-      return false;
-    }
-    setError(null);
-    return true;
+    const next: Partial<Record<keyof FormData, string>> = {};
+    if (!form.name.trim()) next.name = "Please enter your name.";
+    if (!form.phone.trim()) next.phone = "Please enter your phone number.";
+    else if (!/^\d{10}$/.test(form.phone.replace(/\s/g, "")))
+      next.phone = "Enter a valid 10-digit mobile number.";
+    if (!form.address.trim()) next.address = "Please enter your address.";
+    if (!form.city.trim()) next.city = "Please enter your city.";
+    if (!form.pincode.trim() || form.pincode.length !== 6)
+      next.pincode = "Please enter a valid 6-digit pincode.";
+    setFieldErrors(next);
+    const ok = Object.keys(next).length === 0;
+    if (!ok) setError("Please fix the fields highlighted below.");
+    else setError(null);
+    return ok;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (items.length === 0) {
       setError("Your cart is empty.");
+      toast({ title: "Cart is empty", description: "Add items from the menu first.", variant: "error" });
       return;
     }
     if (!validate()) return;
@@ -171,7 +169,9 @@ export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
       const rzp = new (Razorpay as new (o: object) => { open: () => void })(options);
       rzp.open();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      const msg = err instanceof Error ? err.message : "Something went wrong.";
+      setError(msg);
+      toast({ title: "Something went wrong", description: msg, variant: "error" });
     } finally {
       setLoading(false);
     }
@@ -181,6 +181,10 @@ export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="rounded-xl border border-accent/10 bg-secondary/50 p-6 space-y-4">
         <h3 className="text-lg font-semibold text-accent">Delivery Details</h3>
+        <p className="text-xs text-accent/70 -mt-1">
+          We deliver in <strong>Greater Noida</strong> · Orders 9 AM – 11 PM ·{" "}
+          <strong className="text-green-700">Pure veg only</strong>
+        </p>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Name *</Label>
@@ -190,18 +194,27 @@ export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
               onChange={(e) => update("name", e.target.value)}
               placeholder="Your name"
               required
+              autoComplete="name"
+              aria-invalid={Boolean(fieldErrors.name)}
+              className={fieldErrors.name ? "border-red-400 focus:ring-red-400" : ""}
             />
+            {fieldErrors.name && <p className="text-xs text-red-600">{fieldErrors.name}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">Phone *</Label>
             <Input
               id="phone"
               type="tel"
+              inputMode="numeric"
               value={form.phone}
-              onChange={(e) => update("phone", e.target.value)}
+              onChange={(e) => update("phone", e.target.value.replace(/\D/g, "").slice(0, 10))}
               placeholder="10-digit mobile number"
               required
+              autoComplete="tel"
+              aria-invalid={Boolean(fieldErrors.phone)}
+              className={fieldErrors.phone ? "border-red-400 focus:ring-red-400" : ""}
             />
+            {fieldErrors.phone && <p className="text-xs text-red-600">{fieldErrors.phone}</p>}
           </div>
         </div>
         <div className="space-y-2">
@@ -212,7 +225,11 @@ export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
             onChange={(e) => update("address", e.target.value)}
             placeholder="Street, landmark"
             required
+            autoComplete="street-address"
+            aria-invalid={Boolean(fieldErrors.address)}
+            className={fieldErrors.address ? "border-red-400 focus:ring-red-400" : ""}
           />
+          {fieldErrors.address && <p className="text-xs text-red-600">{fieldErrors.address}</p>}
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
@@ -223,7 +240,11 @@ export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
               onChange={(e) => update("city", e.target.value)}
               placeholder="City"
               required
+              autoComplete="address-level2"
+              aria-invalid={Boolean(fieldErrors.city)}
+              className={fieldErrors.city ? "border-red-400 focus:ring-red-400" : ""}
             />
+            {fieldErrors.city && <p className="text-xs text-red-600">{fieldErrors.city}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="pincode">Pincode *</Label>
@@ -233,8 +254,13 @@ export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
               onChange={(e) => update("pincode", e.target.value.replace(/\D/g, "").slice(0, 6))}
               placeholder="6-digit pincode"
               maxLength={6}
+              inputMode="numeric"
               required
+              autoComplete="postal-code"
+              aria-invalid={Boolean(fieldErrors.pincode)}
+              className={fieldErrors.pincode ? "border-red-400 focus:ring-red-400" : ""}
             />
+            {fieldErrors.pincode && <p className="text-xs text-red-600">{fieldErrors.pincode}</p>}
           </div>
         </div>
       </div>
@@ -248,7 +274,7 @@ export function CheckoutForm({ paymentMethod }: CheckoutFormProps) {
           )}
           <Button
             type="submit"
-            className="w-full"
+            className="w-full min-h-12"
             size="lg"
             disabled={loading || items.length === 0}
           >

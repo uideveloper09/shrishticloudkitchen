@@ -7,7 +7,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { Order } from "@/types";
-import { Package } from "lucide-react";
+import { Package, ShoppingBag } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function OrdersPage() {
   const { data: session, status } = useSession();
@@ -29,8 +30,17 @@ export default function OrdersPage() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <p className="text-accent/80">Loading...</p>
+      <div className="container mx-auto px-4 py-8 max-w-3xl">
+        <Skeleton className="h-10 w-64 mb-8" />
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="rounded-xl border border-accent/10 bg-secondary/30 p-6 space-y-3">
+              <Skeleton className="h-4 w-48" />
+              <Skeleton className="h-6 w-32" />
+              <Skeleton className="h-3 w-full max-w-md" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -44,11 +54,20 @@ export default function OrdersPage() {
         Order History
       </h1>
       {orders.length === 0 ? (
-        <div className="rounded-xl border border-accent/10 bg-secondary/50 p-12 text-center">
-          <p className="text-accent/80 mb-4">You haven’t placed any orders yet.</p>
-          <Button asChild>
-            <Link href="/menu">Browse Menu</Link>
-          </Button>
+        <div className="rounded-xl border border-dashed border-[#5c3a21]/25 bg-secondary/50 p-12 text-center max-w-lg mx-auto">
+          <ShoppingBag className="mx-auto h-14 w-14 text-accent/30 mb-4" aria-hidden />
+          <p className="text-accent font-medium text-lg">No orders yet</p>
+          <p className="text-accent/70 text-sm mt-2 mb-6">
+            When you place an order, it will show up here. Start with something delicious from our menu.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center">
+            <Button asChild className="bg-[#b22222] hover:bg-[#9a1d1d] text-white min-h-11">
+              <Link href="/menu">Browse menu</Link>
+            </Button>
+            <Button asChild variant="outline" className="min-h-11 border-[#5c3a21]/30">
+              <Link href="/order">Order online</Link>
+            </Button>
+          </div>
         </div>
       ) : (
         <ul className="space-y-4">

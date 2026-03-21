@@ -8,7 +8,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { X } from "lucide-react";
+import { X, Eye, EyeOff } from "lucide-react";
 import { cn, imgPath } from "@/lib/utils";
 
 interface LoginDrawerProps {
@@ -37,6 +37,7 @@ export function LoginDrawer({
   const [phone, setPhone] = useState("");
   const [referralCode, setReferralCode] = useState("");
   const [showReferralInput, setShowReferralInput] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasGoogleProvider, setHasGoogleProvider] = useState<boolean | null>(null);
@@ -116,10 +117,12 @@ export function LoginDrawer({
   const switchToLogin = () => {
     setView("login");
     setError(null);
+    setShowPassword(false);
   };
   const switchToSignUp = () => {
     setView("signup");
     setError(null);
+    setShowPassword(false);
   };
 
   return (
@@ -228,15 +231,25 @@ export function LoginDrawer({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password">Password</Label>
+                    <div className="flex items-center justify-between gap-2">
+                      <Label htmlFor="signup-password">Password</Label>
+                      <button
+                        type="button"
+                        className="text-xs text-primary hover:underline"
+                        onClick={() => setShowPassword((v) => !v)}
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
                     <Input
                       id="signup-password"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Min 6 characters"
                       minLength={6}
                       required
+                      autoComplete="new-password"
                     />
                   </div>
                   <button
@@ -301,14 +314,26 @@ export function LoginDrawer({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="drawer-password">Password</Label>
+                    <div className="flex items-center justify-between gap-2">
+                      <Label htmlFor="drawer-password">Password</Label>
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                        onClick={() => setShowPassword((v) => !v)}
+                        aria-pressed={showPassword}
+                      >
+                        {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
                     <Input
                       id="drawer-password"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
                       required
+                      autoComplete="current-password"
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>

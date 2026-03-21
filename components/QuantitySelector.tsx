@@ -23,8 +23,9 @@ export function QuantitySelector({
   className,
   size = "default",
 }: QuantitySelectorProps) {
+  /* sm uses 44px min touch target (mobile-friendly) */
   const sizeClass =
-    size === "sm" ? "h-8 w-8" : size === "lg" ? "h-11 w-11" : "h-9 w-9";
+    size === "sm" ? "h-11 w-11 min-h-[44px] min-w-[44px]" : size === "lg" ? "h-11 w-11" : "h-9 w-9";
 
   return (
     <div

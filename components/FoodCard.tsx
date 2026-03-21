@@ -11,6 +11,7 @@ import { ShoppingCart } from "lucide-react";
 import { QuantitySelector } from "./QuantitySelector";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/components/providers/toast-provider";
 
 interface FoodCardProps {
   item: MenuItem;
@@ -28,12 +29,18 @@ export function FoodCard({
   const updateQuantity = useCartStore((s) => s.updateQuantity);
   const cartItem = items.find((i) => i.id === item.id);
   const [isAdding, setIsAdding] = useState(false);
+  const { toast } = useToast();
 
   const quantity = cartItem?.quantity ?? 0;
 
   const handleAdd = () => {
     setIsAdding(true);
     addItem(item);
+    toast({
+      title: quantity > 0 ? "Updated cart" : "Added to cart",
+      description: `${item.title} · ${formatPrice(item.price)}`,
+      variant: "success",
+    });
     setTimeout(() => setIsAdding(false), 300);
   };
 
@@ -79,7 +86,7 @@ export function FoodCard({
         ) : null}
         <Button
           size="sm"
-          className="flex-1 gap-1"
+          className="flex-1 gap-1 min-h-11 sm:min-h-9"
           onClick={handleAdd}
           disabled={isAdding}
         >
