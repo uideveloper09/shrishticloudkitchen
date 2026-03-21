@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { AnimateIn } from "@/components/AnimateIn";
@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <div className="w-full min-w-0 overflow-x-hidden">
       {/* Hero â€“ image with red overlay, title, subtitle, Zomato + Swiggy */}
-      <section className="relative min-h-[70vh] w-full min-w-0 flex items-center overflow-hidden">
+      <section className="relative flex min-h-[46vh] w-full min-w-0 items-center overflow-hidden sm:min-h-[52vh] md:min-h-[56vh] lg:min-h-[70vh]">
         <Image
           src={HERO_IMAGE}
           alt="Fresh homemade parathas"
@@ -29,24 +29,24 @@ export default function HomePage() {
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 20c-2 0-4 1.5-4 4s2 4 4 4 4-1.5 4-4-2-4-4-4zm0 10c-2 0-4 1.5-4 4s2 4 4 4 4-1.5 4-4-2-4-4-4z' fill='%23fff' fill-opacity='0.06'/%3E%3C/svg%3E")`,
           }}
         />
-        <div className="container relative z-10 mx-auto w-full max-w-full px-2 sm:px-4 py-16">
+        <div className="container relative z-10 mx-auto w-full max-w-full px-3 py-7 sm:px-4 sm:py-9 md:py-11 lg:py-16">
           <div className="max-w-2xl w-full">
             <AnimateIn animation="fade-in-up" delay={0}>
-              <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
+              <h1 className="font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Shrishti Cloud Kitchen
               </h1>
             </AnimateIn>
             <AnimateIn animation="fade-in-up" delay={100}>
-              <p className="mt-4 text-lg text-white/95 font-sans md:text-xl">
+              <p className="mt-3 max-w-[28ch] text-base text-white/95 font-sans sm:mt-4 sm:text-lg md:text-xl">
                 Homemade Parathas Delivered Hot & Fresh
               </p>
             </AnimateIn>
             <AnimateIn animation="fade-in-up" delay={200}>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-5 flex w-full max-w-xs flex-col gap-2.5 sm:mt-6 sm:max-w-none sm:flex-row sm:flex-wrap sm:gap-3 md:mt-7 md:gap-4">
               <Button
                 asChild
                 size="lg"
-                className="bg-white text-[#b22222] hover:bg-gray-100 rounded-lg shadow-md font-semibold"
+                className="h-12 w-full bg-white text-[#b22222] hover:bg-gray-100 rounded-lg shadow-md font-semibold sm:h-11 sm:w-auto"
               >
                 <a
                   href="https://www.zomato.com"
@@ -59,7 +59,7 @@ export default function HomePage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-[#FC8019] text-white hover:bg-[#e67314] rounded-lg shadow-md font-semibold border-0"
+                className="h-12 w-full bg-[#FC8019] text-white hover:bg-[#e67314] rounded-lg shadow-md font-semibold border-0 sm:h-11 sm:w-auto"
               >
                 <a
                   href="https://www.swiggy.com"
@@ -75,13 +75,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Wavy divider */}
-      <div className="relative h-14 bg-secondary overflow-hidden">
+      {/* Wavy divider — shorter on mobile/tablet so less cream gap above TrustStrip */}
+      <div className="relative h-9 bg-secondary overflow-hidden sm:h-11 md:h-12 lg:h-14">
         <svg
           viewBox="0 0 1440 56"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute bottom-0 w-full h-14"
+          className="absolute bottom-0 h-9 w-full sm:h-11 md:h-12 lg:h-14"
           preserveAspectRatio="none"
         >
           <path
@@ -96,14 +96,14 @@ export default function HomePage() {
         </svg>
       </div>
 
-      <section className="bg-secondary py-6 border-b border-[#5c3a21]/08">
+      <section className="border-b border-[#5c3a21]/08 bg-secondary pb-5 pt-1 sm:pb-6 sm:pt-3 md:pt-4 lg:py-6">
         <div className="container mx-auto px-4 sm:px-6">
           <TrustStrip className="text-xs sm:text-sm" />
         </div>
       </section>
 
       {/* Popular Parathas â€“ 3 cards */}
-      <section className="bg-secondary py-16">
+      <section className="bg-secondary pb-16 pt-10 sm:pt-12 lg:py-16">
         <div className="container mx-auto px-4 sm:px-6">
           <AnimateIn animation="fade-in-up">
             <h2 className="font-display text-3xl font-bold text-accent text-center mb-10">

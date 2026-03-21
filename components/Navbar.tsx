@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -60,6 +60,10 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     if (status !== "unauthenticated" || typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const callbackUrl = params.get("callbackUrl");
@@ -92,31 +96,39 @@ export function Navbar() {
         className={cn("fixed top-0 left-0 right-0 z-50 w-full overflow-visible border-b border-[#5c3a21]/10 backdrop-blur supports-[backdrop-filter]:bg-[#f5efe6]/90 transition-all duration-300 ease-out", isScrolled ? "bg-[#f5efe6]/98 py-1 shadow-md" : "bg-[#f5efe6]/95 py-2 shadow-none")}
         style={{ backgroundColor: "#f5efe6", borderBottom: "1px solid rgba(92, 58, 33, 0.1)" }}
       >
-        <div className={cn("container mx-auto flex items-center justify-between gap-6 overflow-visible transition-all duration-300", isScrolled ? "h-14 px-4 sm:px-6" : "h-16 px-4 sm:px-6")}>
-          {/* Left: logo â€“ same design (40px height, left-aligned) */}
+        <div
+          className={cn(
+            "container mx-auto flex min-w-0 items-center justify-between gap-2 overflow-visible transition-all duration-300 sm:gap-4 lg:gap-6",
+            isScrolled ? "h-14 px-3 sm:px-4 md:px-6" : "h-16 px-3 sm:px-4 md:px-6"
+          )}
+        >
+          {/* Left: logo — scales down on phones / tablets */}
           <Link
             href="/"
-            className="flex shrink-0 items-center py-[7.5px] focus:outline-none focus:ring-2 focus:ring-[#b22222] focus:ring-offset-2 rounded"
-            aria-label="Shrishti Cloud Kitchen â€“ Home"
+            className="flex min-w-0 shrink items-center py-1 focus:outline-none focus:ring-2 focus:ring-[#b22222] focus:ring-offset-2 rounded"
+            aria-label="Shrishti Cloud Kitchen – Home"
           >
             <Image
               src={imgPath("@/images/logo.png")}
               alt="Shrishti Cloud Kitchen"
               width={180}
               height={48}
-              className={cn("w-auto object-contain object-left transition-all duration-300", isScrolled ? "h-12" : "h-16")}
+              className={cn(
+                "h-auto max-w-[min(100%,9.5rem)] w-auto object-contain object-left transition-all duration-300 sm:max-w-[11rem] md:max-w-[13rem] lg:max-w-none",
+                isScrolled ? "max-h-10 sm:max-h-11 lg:max-h-12" : "max-h-12 sm:max-h-14 lg:max-h-16"
+              )}
               priority
             />
           </Link>
 
-          {/* Pure veg â€“ leaf + text, theme colours */}
-          <span className="hidden sm:inline-flex items-center gap-1.5 rounded-md bg-[#5c3a21]/08 px-2.5 py-1 text-xs font-medium text-[#5c3a21] border border-[#5c3a21]/20">
+          {/* Pure veg — only with full desktop nav (lg+) to save horizontal space on tablet */}
+          <span className="hidden lg:inline-flex shrink-0 items-center gap-1.5 rounded-md bg-[#5c3a21]/08 px-2.5 py-1 text-xs font-medium text-[#5c3a21] border border-[#5c3a21]/20">
             <Leaf className="h-3.5 w-3.5 text-green-600 shrink-0" />
             Pure veg only
           </span>
 
-          {/* Center: nav menu â€“ same design (active underline, cream bg) */}
-          <nav className="hidden md:flex flex-1 items-center justify-center gap-8 min-w-0">
+          {/* Center: nav — lg+ only; mobile & tablet use hamburger drawer */}
+          <nav className="hidden lg:flex flex-1 items-center justify-center gap-6 xl:gap-8 min-w-0">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -136,33 +148,34 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Right: Order Online CTA (red) + cart + auth â€“ same design */}
-          <div className="relative z-[45] flex shrink-0 items-center gap-3 overflow-visible">
+          {/* Right: Order Online (desktop) + cart + auth (lg+) + hamburger (<lg) */}
+          <div className="relative z-[45] flex shrink-0 items-center gap-1.5 sm:gap-2 lg:gap-3 overflow-visible">
             <Button
               asChild
               size="sm"
-              className="hidden sm:inline-flex bg-[#b22222] hover:bg-[#9a1d1d] text-white rounded-lg px-5 font-medium shadow-sm"
+              className="hidden lg:inline-flex bg-[#b22222] hover:bg-[#9a1d1d] text-white rounded-lg px-4 xl:px-5 font-medium shadow-sm"
             >
               <Link href="/order">Order Online</Link>
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="relative text-[#5c3a21] hover:text-[#b22222]"
+              className="relative h-11 w-11 min-h-[44px] min-w-[44px] text-[#5c3a21] hover:text-[#b22222] lg:h-9 lg:w-9 lg:min-h-0 lg:min-w-0"
               onClick={() => setCartOpen(true)}
               aria-label="Open cart"
             >
               <ShoppingBag className="h-5 w-5" />
               {mounted && itemCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#b22222] text-[10px] font-bold text-white">
+                <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#b22222] text-[10px] font-bold text-white">
                   {itemCount > 99 ? "99+" : itemCount}
                 </span>
               )}
             </Button>
 
             {!mounted || status === "loading" ? (
-              <div className="h-9 w-9 rounded-full bg-accent/10 animate-pulse" aria-hidden />
+              <div className="h-9 w-9 shrink-0 rounded-full bg-accent/10 animate-pulse" aria-hidden />
             ) : session ? (
+              <div className="hidden lg:block">
               <DropdownMenu.Root
                 modal={false} /* avoid Radix scroll-lock padding (right-edge gap) */
               >
@@ -250,8 +263,9 @@ export function Navbar() {
                   </DropdownMenu.Content>
                 </DropdownMenu.Portal>
               </DropdownMenu.Root>
+              </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="hidden items-center gap-2 lg:flex">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -281,29 +295,60 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="h-11 w-11 min-h-[44px] min-w-[44px] lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav-menu"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
-        {/* Mobile menu â€“ animated toggle (slide down + fade) */}
+        {/* Mobile / tablet menu — full nav + account (below lg) */}
         <div
+          id="mobile-nav-menu"
           className={cn(
-            "md:hidden overflow-hidden border-t bg-[#f5efe6] transition-all duration-300 ease-out",
+            "lg:hidden overflow-hidden border-t bg-[#f5efe6] transition-all duration-300 ease-out",
             mobileOpen
-              ? "max-h-[80vh] opacity-100 border-[#5c3a21]/10"
+              ? "max-h-[85vh] opacity-100 border-[#5c3a21]/10"
               : "max-h-0 opacity-0 border-transparent"
           )}
         >
-          <nav className="container mx-auto flex flex-col gap-1 px-4 py-4">
-            <p className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-[#5c3a21] bg-[#5c3a21]/08 rounded-lg border border-[#5c3a21]/15 sm:hidden">
-              <Leaf className="h-3.5 w-3.5 text-green-600 shrink-0" />
+          <nav className="container mx-auto flex max-h-[85vh] flex-col gap-1 overflow-y-auto px-3 py-4 sm:px-4 md:px-6">
+            <p className="flex items-center gap-2 rounded-lg border border-[#5c3a21]/15 bg-[#5c3a21]/08 px-3 py-2 text-xs font-medium text-[#5c3a21] lg:hidden">
+              <Leaf className="h-3.5 w-3.5 shrink-0 text-green-600" />
               Pure vegetarian only
             </p>
+            {session && (
+              <div className="mb-2 flex min-w-0 items-center gap-3 rounded-lg border border-[#5c3a21]/10 bg-[#5c3a21]/05 px-3 py-2.5 lg:hidden">
+                {session.user?.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- OAuth avatar URLs vary by host
+                  <img
+                    src={session.user.image}
+                    alt=""
+                    className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-[#5c3a21]/10"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#b22222]/15 text-sm font-bold text-[#b22222] ring-2 ring-[#5c3a21]/10"
+                    aria-hidden
+                  >
+                    {userInitials(session.user?.name, session.user?.email)}
+                  </div>
+                )}
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold text-accent">
+                    {session.user?.name?.trim() ||
+                      session.user?.email?.split("@")[0] ||
+                      "Account"}
+                  </p>
+                  <p className="truncate text-xs text-accent/70">{session.user?.email ?? ""}</p>
+                </div>
+              </div>
+            )}
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
