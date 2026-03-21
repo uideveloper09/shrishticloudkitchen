@@ -161,7 +161,7 @@ export function LoginDrawer({
                 {/* Paratha image: local file (add public/images/paratha-login.png) or fallback emoji */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={imgPath("@/images/paratha-login.jpeg")}
+                  src={imgPath("@/images/paratha-login.png")}
                   alt=""
                   width={96}
                   height={96}
@@ -316,17 +316,9 @@ export function LoginDrawer({
                   </Button>
                 </form>
                 {hasGoogleProvider === false && (
-                  <p className="mt-4 text-xs text-gray-500 leading-relaxed">
-                    <strong className="text-gray-700">Google login:</strong> Add{" "}
-                    <code className="rounded bg-gray-100 px-1">GOOGLE_CLIENT_ID</code> and{" "}
-                    <code className="rounded bg-gray-100 px-1">GOOGLE_CLIENT_SECRET</code>{" "}
-                    in <strong>.env.local</strong> (local) or <strong>Vercel → Environment Variables</strong> (live site), then{" "}
-                    <strong>Redeploy</strong>. In Google Cloud OAuth, add redirect URI{" "}
-                    <code className="rounded bg-gray-100 px-1 break-all">
-                      https://shrishticloud.kitchen/api/auth/callback/google
-                    </code>{" "}
-                    (and <code className="rounded bg-gray-100 px-1">http://localhost:3000/api/auth/callback/google</code> for dev). See{" "}
-                    <code className="rounded bg-gray-100 px-1">.env.example</code>.
+                  <p className="mt-4 text-xs text-gray-500 text-center">
+                    Sign in with Google will be available soon. Please use{" "}
+                    <strong className="text-gray-700">email and password</strong> above.
                   </p>
                 )}
                 {hasGoogleProvider && (
