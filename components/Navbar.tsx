@@ -59,10 +59,10 @@ export function Navbar() {
   return (
     <>
       <header
-        className="sticky top-0 z-40 w-full border-b border-[#5c3a21]/10 bg-[#f5efe6]/95 backdrop-blur supports-[backdrop-filter]:bg-[#f5efe6]/90 p-2"
+        className="sticky top-0 z-40 w-full overflow-visible border-b border-[#5c3a21]/10 bg-[#f5efe6]/95 backdrop-blur supports-[backdrop-filter]:bg-[#f5efe6]/90 p-2"
         style={{ backgroundColor: "#f5efe6", borderBottom: "1px solid rgba(92, 58, 33, 0.1)" }}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between gap-6 px-6">
+        <div className="container mx-auto flex h-16 items-center justify-between gap-6 px-6 overflow-visible">
           {/* Left: logo – same design (40px height, left-aligned) */}
           <Link
             href="/"
@@ -107,7 +107,7 @@ export function Navbar() {
           </nav>
 
           {/* Right: Order Online CTA (red) + cart + auth – same design */}
-          <div className="flex shrink-0 items-center gap-3">
+          <div className="relative z-[45] flex shrink-0 items-center gap-3 overflow-visible">
             <Button
               asChild
               size="sm"
@@ -141,9 +141,13 @@ export function Navbar() {
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
                   <DropdownMenu.Content
-                    className="min-w-[180px] rounded-lg border border-accent/10 bg-secondary p-1 shadow-lg"
+                    className="z-[200] min-w-[200px] rounded-lg border border-accent/10 bg-secondary p-1.5 shadow-lg"
                     align="end"
-                    sideOffset={8}
+                    side="bottom"
+                    sideOffset={10}
+                    alignOffset={0}
+                    avoidCollisions
+                    collisionPadding={12}
                   >
                     <DropdownMenu.Item
                       className="rounded-md px-3 py-2 text-sm text-accent outline-none hover:bg-accent/10 focus:bg-accent/10"
@@ -240,7 +244,37 @@ export function Navbar() {
                 </Link>
               );
             })}
-            {!session && (
+            {session ? (
+              <>
+                <Link
+                  href="/orders"
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-[#5c3a21] hover:bg-[#5c3a21]/10 w-full text-left transition-colors"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Order History
+                </Link>
+                {session.user?.email?.includes("admin") && (
+                  <Link
+                    href="/admin"
+                    className="rounded-lg px-3 py-2 text-sm font-medium text-[#5c3a21] hover:bg-[#5c3a21]/10 w-full text-left transition-colors"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Admin
+                  </Link>
+                )}
+                <button
+                  type="button"
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-[#b22222] w-full text-left transition-colors flex items-center gap-2"
+                  onClick={() => {
+                    setMobileOpen(false);
+                    signOut({ callbackUrl: "/" });
+                  }}
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign out
+                </button>
+              </>
+            ) : (
               <>
                 <button
                   type="button"
