@@ -161,7 +161,14 @@ export function Navbar() {
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
                   <DropdownMenu.Content
-                    className="z-[200] min-w-[260px] max-w-[min(100vw-2rem,320px)] rounded-lg border border-accent/10 bg-secondary p-0 shadow-lg"
+                    className={cn(
+                      "z-[200] min-w-[260px] max-w-[min(100vw-2rem,320px)] rounded-lg border border-accent/10 bg-secondary p-0 shadow-xl",
+                      "origin-top-right",
+                      "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+                      "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+                      "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2",
+                      "duration-200 ease-out"
+                    )}
                     align="end"
                     side="bottom"
                     sideOffset={10}
@@ -170,19 +177,19 @@ export function Navbar() {
                     collisionPadding={12}
                   >
                     {/* Profile summary — not a menu row */}
-                    <div className="border-b border-accent/10 px-3 py-3">
+                    <div className="border-b border-accent/10 px-3 py-3 animate-in fade-in slide-in-from-top-1 duration-300">
                       <div className="flex items-center gap-3 min-w-0">
                         {session.user?.image ? (
                           // eslint-disable-next-line @next/next/no-img-element -- OAuth avatar URLs vary by host
                           <img
                             src={session.user.image}
                             alt=""
-                            className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-[#5c3a21]/10"
+                            className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-[#5c3a21]/10 transition-transform duration-300 hover:scale-105"
                             referrerPolicy="no-referrer"
                           />
                         ) : (
                           <div
-                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#b22222]/15 text-sm font-bold text-[#b22222] ring-2 ring-[#5c3a21]/10"
+                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#b22222]/15 text-sm font-bold text-[#b22222] ring-2 ring-[#5c3a21]/10 transition-transform duration-300 hover:scale-105"
                             aria-hidden
                           >
                             {userInitials(session.user?.name, session.user?.email)}
@@ -200,11 +207,11 @@ export function Navbar() {
                         </div>
                       </div>
                     </div>
-                    <div className="p-1.5 pt-1">
+                    <div className="p-1.5 pt-1 animate-in fade-in slide-in-from-top-1 duration-300 delay-75">
                     <DropdownMenu.Item className="w-full min-w-0 p-0 outline-none" asChild>
                       <Link
                         href="/orders"
-                        className="block w-full rounded-md px-3 py-2 text-sm text-accent no-underline outline-none hover:bg-accent/10 data-[highlighted]:bg-accent/10"
+                        className="block w-full rounded-md px-3 py-2 text-sm text-accent no-underline outline-none transition-colors duration-150 hover:bg-accent/10 data-[highlighted]:bg-accent/10 active:scale-[0.99]"
                       >
                         Order History
                       </Link>
@@ -213,7 +220,7 @@ export function Navbar() {
                       <DropdownMenu.Item className="w-full min-w-0 p-0 outline-none" asChild>
                         <Link
                           href="/admin"
-                          className="block w-full rounded-md px-3 py-2 text-sm text-accent no-underline outline-none hover:bg-accent/10 data-[highlighted]:bg-accent/10"
+                          className="block w-full rounded-md px-3 py-2 text-sm text-accent no-underline outline-none transition-colors duration-150 hover:bg-accent/10 data-[highlighted]:bg-accent/10 active:scale-[0.99]"
                         >
                           Admin
                         </Link>
@@ -221,10 +228,10 @@ export function Navbar() {
                     )}
                     <DropdownMenu.Separator className="my-1 h-px bg-accent/10" />
                     <DropdownMenu.Item
-                      className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-accent outline-none hover:bg-accent/10 data-[highlighted]:bg-accent/10"
+                      className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-accent outline-none transition-colors duration-150 hover:bg-accent/10 data-[highlighted]:bg-accent/10 data-[highlighted]:text-[#b22222] data-[highlighted]:[&_svg]:translate-x-0.5"
                       onSelect={() => setLogoutConfirmOpen(true)}
                     >
-                      <LogOut className="h-4 w-4 shrink-0" />
+                      <LogOut className="h-4 w-4 shrink-0 transition-transform duration-200" />
                       Sign out
                     </DropdownMenu.Item>
                     </div>
