@@ -149,26 +149,30 @@ export function Navbar() {
                     avoidCollisions
                     collisionPadding={12}
                   >
-                    <DropdownMenu.Item
-                      className="rounded-md px-3 py-2 text-sm text-accent outline-none hover:bg-accent/10 focus:bg-accent/10"
-                      asChild
-                    >
-                      <Link href="/orders">Order History</Link>
+                    <DropdownMenu.Item className="w-full min-w-0 p-0 outline-none" asChild>
+                      <Link
+                        href="/orders"
+                        className="block w-full rounded-md px-3 py-2 text-sm text-accent no-underline outline-none hover:bg-accent/10 data-[highlighted]:bg-accent/10"
+                      >
+                        Order History
+                      </Link>
                     </DropdownMenu.Item>
                     {session.user?.email?.includes("admin") && (
-                      <DropdownMenu.Item
-                        className="rounded-md px-3 py-2 text-sm text-accent outline-none hover:bg-accent/10 focus:bg-accent/10"
-                        asChild
-                      >
-                        <Link href="/admin">Admin</Link>
+                      <DropdownMenu.Item className="w-full min-w-0 p-0 outline-none" asChild>
+                        <Link
+                          href="/admin"
+                          className="block w-full rounded-md px-3 py-2 text-sm text-accent no-underline outline-none hover:bg-accent/10 data-[highlighted]:bg-accent/10"
+                        >
+                          Admin
+                        </Link>
                       </DropdownMenu.Item>
                     )}
                     <DropdownMenu.Separator className="my-1 h-px bg-accent/10" />
                     <DropdownMenu.Item
-                      className="rounded-md px-3 py-2 text-sm text-accent outline-none hover:bg-accent/10 focus:bg-accent/10 cursor-pointer"
+                      className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-accent outline-none hover:bg-accent/10 data-[highlighted]:bg-accent/10"
                       onSelect={() => signOut({ callbackUrl: "/" })}
                     >
-                      <LogOut className="mr-2 h-4 w-4 inline" />
+                      <LogOut className="h-4 w-4 shrink-0" />
                       Sign out
                     </DropdownMenu.Item>
                   </DropdownMenu.Content>
