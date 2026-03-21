@@ -11,6 +11,7 @@ import { CartDrawer } from "./CartDrawer";
 import { LoginDrawer } from "./LoginDrawer";
 import { useCartStore } from "@/store/cart-store";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as Dialog from "@radix-ui/react-dialog";
 import { cn, imgPath } from "@/lib/utils";
 
 const navLinks = [
@@ -40,7 +41,13 @@ export function Navbar() {
   const [loginCallbackUrl, setLoginCallbackUrl] = useState("/");
   const [authDrawerView, setAuthDrawerView] = useState<"login" | "signup">("login");
   const [mounted, setMounted] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const itemCount = useCartStore((s) => s.getItemCount());
+
+  const handleConfirmLogout = () => {
+    setLogoutConfirmOpen(false);
+    signOut({ callbackUrl: "/" });
+  };
 
   useEffect(() => setMounted(true), []);
 
@@ -213,7 +220,7 @@ export function Navbar() {
                     <DropdownMenu.Separator className="my-1 h-px bg-accent/10" />
                     <DropdownMenu.Item
                       className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-accent outline-none hover:bg-accent/10 data-[highlighted]:bg-accent/10"
-                      onSelect={() => signOut({ callbackUrl: "/" })}
+                      onSelect={() => setLogoutConfirmOpen(true)}
                     >
                       <LogOut className="h-4 w-4 shrink-0" />
                       Sign out
@@ -315,7 +322,7 @@ export function Navbar() {
                   className="rounded-lg px-3 py-2 text-sm font-medium text-[#b22222] w-full text-left transition-colors flex items-center gap-2"
                   onClick={() => {
                     setMobileOpen(false);
-                    signOut({ callbackUrl: "/" });
+                    setLogoutConfirmOpen(true);
                   }}
                 >
                   <LogOut className="h-4 w-4" />
@@ -356,6 +363,37 @@ export function Navbar() {
 
       <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
       <LoginDrawer open={loginOpen} onOpenChange={setLoginOpen} callbackUrl={loginCallbackUrl} defaultView={authDrawerView} />
+
+      <Dialog.Root open={logoutConfirmOpen} onOpenChange={setLogoutConfirmOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 z-[300] bg-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+          <Dialog.Content
+            className={cn(
+              "fixed left-1/2 top-1/2 z-[301] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl border border-[#5c3a21]/15 bg-[#f5efe6] p-6 shadow-xl",
+              "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+            )}
+          >
+            <Dialog.Title className="font-display text-lg font-bold text-accent">
+              Sign out?
+            </Dialog.Title>
+            <Dialog.Description className="mt-2 text-sm text-accent/80">
+              Are you sure you want to sign out? You will need to sign in again to place orders or view order history.
+            </Dialog.Description>
+            <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-3">
+              <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={() => setLogoutConfirmOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                className="w-full bg-[#b22222] hover:bg-[#9a1d1d] text-white sm:w-auto"
+                onClick={handleConfirmLogout}
+              >
+                Sign out
+              </Button>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </>
   );
 }
