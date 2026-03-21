@@ -151,7 +151,8 @@ export function Navbar() {
             {!mounted || status === "loading" ? (
               <div className="h-9 w-9 rounded-full bg-accent/10 animate-pulse" aria-hidden />
             ) : session ? (
-              <DropdownMenu.Root>
+              {/* modal={false} avoids body scroll-lock + padding-right that causes a right-edge gap */}
+              <DropdownMenu.Root modal={false}>
                 <DropdownMenu.Trigger asChild>
                   <Button variant="ghost" size="icon" aria-label="Account menu">
                     <User className="h-5 w-5" />
