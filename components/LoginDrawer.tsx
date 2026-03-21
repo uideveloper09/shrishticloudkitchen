@@ -316,8 +316,17 @@ export function LoginDrawer({
                   </Button>
                 </form>
                 {hasGoogleProvider === false && (
-                  <p className="mt-4 text-xs text-gray-500">
-                    To enable Sign in with Google, add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to .env.local (see .env.example).
+                  <p className="mt-4 text-xs text-gray-500 leading-relaxed">
+                    <strong className="text-gray-700">Google login:</strong> Add{" "}
+                    <code className="rounded bg-gray-100 px-1">GOOGLE_CLIENT_ID</code> and{" "}
+                    <code className="rounded bg-gray-100 px-1">GOOGLE_CLIENT_SECRET</code>{" "}
+                    in <strong>.env.local</strong> (local) or <strong>Vercel → Environment Variables</strong> (live site), then{" "}
+                    <strong>Redeploy</strong>. In Google Cloud OAuth, add redirect URI{" "}
+                    <code className="rounded bg-gray-100 px-1 break-all">
+                      https://shrishticloud.kitchen/api/auth/callback/google
+                    </code>{" "}
+                    (and <code className="rounded bg-gray-100 px-1">http://localhost:3000/api/auth/callback/google</code> for dev). See{" "}
+                    <code className="rounded bg-gray-100 px-1">.env.example</code>.
                   </p>
                 )}
                 {hasGoogleProvider && (
