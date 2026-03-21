@@ -7,7 +7,7 @@ import { formatPrice, imgPath } from "@/lib/utils";
 import { Leaf } from "lucide-react";
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1604329760661-e71dc83f2b26?w=1200&q=85";
+  "@/images/banner/banner1.png?w=1200&q=85";
 
 export default function HomePage() {
   return (
