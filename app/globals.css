@@ -48,9 +48,8 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: var(--primary);
-}
+/* Don’t set a global link hover color — it breaks red CTAs (red text on red bg).
+   Use Tailwind hover: on nav, footer, and buttons instead. */
 
 /* Base button reset */
 button {
