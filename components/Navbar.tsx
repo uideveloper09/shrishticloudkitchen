@@ -20,6 +20,17 @@ const navLinks = [
   { href: "/order", label: "Order Online" },
 ];
 
+function userInitials(name: string | null | undefined, email: string | null | undefined): string {
+  const n = (name || "").trim();
+  if (n) {
+    const parts = n.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    return n.slice(0, 2).toUpperCase();
+  }
+  const e = (email || "").split("@")[0] || "?";
+  return e.slice(0, 2).toUpperCase();
+}
+
 export function Navbar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
@@ -141,7 +152,7 @@ export function Navbar() {
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
                   <DropdownMenu.Content
-                    className="z-[200] min-w-[200px] rounded-lg border border-accent/10 bg-secondary p-1.5 shadow-lg"
+                    className="z-[200] min-w-[260px] max-w-[min(100vw-2rem,320px)] rounded-lg border border-accent/10 bg-secondary p-0 shadow-lg"
                     align="end"
                     side="bottom"
                     sideOffset={10}
@@ -149,6 +160,38 @@ export function Navbar() {
                     avoidCollisions
                     collisionPadding={12}
                   >
+                    {/* Profile summary — not a menu row */}
+                    <div className="border-b border-accent/10 px-3 py-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        {session.user?.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element -- OAuth avatar URLs vary by host
+                          <img
+                            src={session.user.image}
+                            alt=""
+                            className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-[#5c3a21]/10"
+                            referrerPolicy="no-referrer"
+                          />
+                        ) : (
+                          <div
+                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#b22222]/15 text-sm font-bold text-[#b22222] ring-2 ring-[#5c3a21]/10"
+                            aria-hidden
+                          >
+                            {userInitials(session.user?.name, session.user?.email)}
+                          </div>
+                        )}
+                        <div className="min-w-0 flex-1 text-left">
+                          <p className="truncate text-sm font-semibold text-accent">
+                            {session.user?.name?.trim() ||
+                              session.user?.email?.split("@")[0] ||
+                              "Account"}
+                          </p>
+                          <p className="truncate text-xs text-accent/70" title={session.user?.email ?? undefined}>
+                            {session.user?.email ?? "—"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-1.5 pt-1">
                     <DropdownMenu.Item className="w-full min-w-0 p-0 outline-none" asChild>
                       <Link
                         href="/orders"
@@ -175,6 +218,7 @@ export function Navbar() {
                       <LogOut className="h-4 w-4 shrink-0" />
                       Sign out
                     </DropdownMenu.Item>
+                    </div>
                   </DropdownMenu.Content>
                 </DropdownMenu.Portal>
               </DropdownMenu.Root>
