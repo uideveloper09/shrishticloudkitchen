@@ -6,6 +6,15 @@ import { getUserByEmail } from "@/lib/users-store";
 const hasGoogleOAuth =
   process.env.GOOGLE_CLIENT_ID?.trim() && process.env.GOOGLE_CLIENT_SECRET?.trim();
 
+/** Required in production — without it NextAuth shows "Server error" /api/auth/error */
+const authSecret = process.env.NEXTAUTH_SECRET?.trim();
+
+if (process.env.NODE_ENV === "production" && !authSecret) {
+  console.error(
+    "[next-auth] NEXTAUTH_SECRET is missing. Add it in Vercel → Environment Variables and redeploy."
+  );
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -53,7 +62,10 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  pages: { signIn: "/" },
+  pages: {
+    signIn: "/",
+    error: "/auth/error",
+  },
   session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: authSecret,
 };
