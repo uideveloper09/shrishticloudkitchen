@@ -6,8 +6,8 @@ import { popularParathas } from "@/lib/menu-data";
 import { formatPrice, imgPath } from "@/lib/utils";
 import { Leaf } from "lucide-react";
 
-const HERO_IMAGE =
-  "@/images/banner/banner1.png?w=1200&q=85";
+/** Local file in public/images/banner — use / path; no ?w=&q= (those only apply to remote/CDN URLs) */
+const HERO_IMAGE = imgPath("@/images/banner/banner1.png");
 
 export default function HomePage() {
   return (
