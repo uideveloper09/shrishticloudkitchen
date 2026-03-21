@@ -36,6 +36,12 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
+/* Radix scroll-lock adds margin-right/padding-right — remove gap when dialogs/menus lock scroll */
+body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
 /* Prevent links from default purple/blue when Tailwind loads late */
 a {
   color: inherit;
