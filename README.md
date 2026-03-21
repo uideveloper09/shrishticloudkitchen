@@ -54,8 +54,9 @@ Copy `.env.example` to `.env.local` and fill in:
 npm run dev
 ```
 
-<<<<<<< HEAD
 Open [http://localhost:3000](http://localhost:3000).
+
+**Google Sign-in (production):** step-by-step for [shrishticloud.kitchen](https://shrishticloud.kitchen) — [docs/GOOGLE_OAUTH_SETUP.md](docs/GOOGLE_OAUTH_SETUP.md).
 
 ## Features
 
@@ -74,9 +75,10 @@ Open [http://localhost:3000](http://localhost:3000).
 1. Push to GitHub and import the repo in Vercel.
 2. Add environment variables in Vercel:
    - `NEXTAUTH_SECRET`
-   - `NEXTAUTH_URL` (e.g. `https://your-domain.vercel.app`)
+   - `NEXTAUTH_URL` — e.g. `https://shrishticloud.kitchen` (no trailing slash; must match your live domain)
    - `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `NEXT_PUBLIC_RAZORPAY_KEY`
-   - Optional: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `ADMIN_EMAIL`
+   - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` — see [docs/GOOGLE_OAUTH_SETUP.md](docs/GOOGLE_OAUTH_SETUP.md) for redirect URI `https://shrishticloud.kitchen/api/auth/callback/google`
+   - Optional: `ADMIN_EMAIL`
 3. Deploy. Orders are stored in memory; for production use a database and set `DATABASE_URL`.
 
 ## Project structure
