@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import { AnimateIn } from "@/components/AnimateIn";
 import { FoodCard } from "@/components/FoodCard";
 import { menuItems } from "@/lib/menu-data";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, imgPath } from "@/lib/utils";
 
-const MENU_IMAGE =
-  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=85";
+const MENU_IMAGE = imgPath("@/images/menu/menu.png");
 
 export default function MenuPage() {
   const parathas = menuItems.filter(
@@ -86,7 +85,7 @@ export default function MenuPage() {
           </AnimateIn>
         </div>
 
-        {/* Full menu – add to cart */}
+        {/* Full menu â€“ add to cart */}
         <div className="mt-16 pt-12 border-t border-[#5c3a21]/15">
           <h2 className="font-display text-2xl font-bold text-accent mb-6">
             Build your order
@@ -101,3 +100,4 @@ export default function MenuPage() {
     </div>
   );
 }
+

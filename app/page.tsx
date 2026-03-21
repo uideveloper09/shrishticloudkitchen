@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { AnimateIn } from "@/components/AnimateIn";
@@ -7,13 +7,13 @@ import { formatPrice, imgPath } from "@/lib/utils";
 import { Leaf } from "lucide-react";
 import { TrustStrip } from "@/components/TrustStrip";
 
-/** Local file in public/images/banner — use / path; no ?w=&q= (those only apply to remote/CDN URLs) */
+/** Local file in public/images/banner â€” use / path; no ?w=&q= (those only apply to remote/CDN URLs) */
 const HERO_IMAGE = imgPath("@/images/banner/banner1.png");
 
 export default function HomePage() {
   return (
     <div className="w-full min-w-0 overflow-x-hidden">
-      {/* Hero – image with red overlay, title, subtitle, Zomato + Swiggy */}
+      {/* Hero â€“ image with red overlay, title, subtitle, Zomato + Swiggy */}
       <section className="relative min-h-[70vh] w-full min-w-0 flex items-center overflow-hidden">
         <Image
           src={HERO_IMAGE}
@@ -29,7 +29,7 @@ export default function HomePage() {
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 20c-2 0-4 1.5-4 4s2 4 4 4 4-1.5 4-4-2-4-4-4zm0 10c-2 0-4 1.5-4 4s2 4 4 4 4-1.5 4-4-2-4-4-4z' fill='%23fff' fill-opacity='0.06'/%3E%3C/svg%3E")`,
           }}
         />
-        <div className="container relative z-10 mx-auto w-full max-w-full px-4 sm:px-6 py-16">
+        <div className="container relative z-10 mx-auto w-full max-w-full px-2 sm:px-4 py-16">
           <div className="max-w-2xl w-full">
             <AnimateIn animation="fade-in-up" delay={0}>
               <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
@@ -102,16 +102,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Popular Parathas – 3 cards */}
+      {/* Popular Parathas â€“ 3 cards */}
       <section className="bg-secondary py-16">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <AnimateIn animation="fade-in-up">
             <h2 className="font-display text-3xl font-bold text-accent text-center mb-10">
               Popular Parathas
             </h2>
           </AnimateIn>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
-            {popularParathas.slice(0, 3).map((item, i) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 w-full">
+            {popularParathas.slice(0, 4).map((item, i) => (
               <AnimateIn key={item.id} animation="scale-in" delay={i * 80}>
               <Link
                 key={item.id}
@@ -153,9 +153,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* The Taste of Home – 2 columns */}
+      {/* The Taste of Home â€“ 2 columns */}
       <section className="py-16 bg-white border-t border-[#5c3a21]/10">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <AnimateIn animation="slide-in-right">
             <div>
@@ -190,9 +190,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Preparation showcase – 3 images + text */}
+      {/* Preparation showcase â€“ 3 images + text */}
       <section className="py-16 bg-secondary">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="grid gap-10 lg:grid-cols-2 items-center">
             <AnimateIn animation="fade-in-up">
             <div className="grid grid-cols-3 gap-3 max-w-md mx-auto lg:max-w-none">
@@ -232,13 +232,13 @@ export default function HomePage() {
 
       {/* Gallery preview */}
       <section className="py-16 bg-white border-t border-[#5c3a21]/10">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <AnimateIn animation="fade-in-up">
             <h2 className="font-display text-3xl font-bold text-accent text-center mb-8">
               Gallery
             </h2>
           </AnimateIn>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
             {[
               "image1.jpeg",
               "paneer-parathas.png",

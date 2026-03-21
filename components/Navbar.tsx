@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -42,6 +42,7 @@ export function Navbar() {
   const [authDrawerView, setAuthDrawerView] = useState<"login" | "signup">("login");
   const [mounted, setMounted] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const itemCount = useCartStore((s) => s.getItemCount());
 
   const handleConfirmLogout = () => {
@@ -50,6 +51,13 @@ export function Navbar() {
   };
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (status !== "unauthenticated" || typeof window === "undefined") return;
@@ -76,34 +84,38 @@ export function Navbar() {
 
   return (
     <>
+      <div
+        aria-hidden
+        className={cn("w-full transition-all duration-300", isScrolled ? "h-16" : "h-20")}
+      />
       <header
-        className="sticky top-0 z-40 w-full overflow-visible border-b border-[#5c3a21]/10 bg-[#f5efe6]/95 backdrop-blur supports-[backdrop-filter]:bg-[#f5efe6]/90 p-2"
+        className={cn("fixed top-0 left-0 right-0 z-50 w-full overflow-visible border-b border-[#5c3a21]/10 backdrop-blur supports-[backdrop-filter]:bg-[#f5efe6]/90 transition-all duration-300 ease-out", isScrolled ? "bg-[#f5efe6]/98 py-1 shadow-md" : "bg-[#f5efe6]/95 py-2 shadow-none")}
         style={{ backgroundColor: "#f5efe6", borderBottom: "1px solid rgba(92, 58, 33, 0.1)" }}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between gap-6 px-6 overflow-visible">
-          {/* Left: logo – same design (40px height, left-aligned) */}
+        <div className={cn("container mx-auto flex items-center justify-between gap-6 overflow-visible transition-all duration-300", isScrolled ? "h-14 px-4 sm:px-6" : "h-16 px-4 sm:px-6")}>
+          {/* Left: logo â€“ same design (40px height, left-aligned) */}
           <Link
             href="/"
             className="flex shrink-0 items-center py-[7.5px] focus:outline-none focus:ring-2 focus:ring-[#b22222] focus:ring-offset-2 rounded"
-            aria-label="Shrishti Cloud Kitchen – Home"
+            aria-label="Shrishti Cloud Kitchen â€“ Home"
           >
             <Image
               src={imgPath("@/images/logo.png")}
               alt="Shrishti Cloud Kitchen"
               width={180}
               height={48}
-              className="h-16 w-auto object-contain object-left"
+              className={cn("w-auto object-contain object-left transition-all duration-300", isScrolled ? "h-12" : "h-16")}
               priority
             />
           </Link>
 
-          {/* Pure veg – leaf + text, theme colours */}
+          {/* Pure veg â€“ leaf + text, theme colours */}
           <span className="hidden sm:inline-flex items-center gap-1.5 rounded-md bg-[#5c3a21]/08 px-2.5 py-1 text-xs font-medium text-[#5c3a21] border border-[#5c3a21]/20">
             <Leaf className="h-3.5 w-3.5 text-green-600 shrink-0" />
             Pure veg only
           </span>
 
-          {/* Center: nav menu – same design (active underline, cream bg) */}
+          {/* Center: nav menu â€“ same design (active underline, cream bg) */}
           <nav className="hidden md:flex flex-1 items-center justify-center gap-8 min-w-0">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -124,7 +136,7 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Right: Order Online CTA (red) + cart + auth – same design */}
+          {/* Right: Order Online CTA (red) + cart + auth â€“ same design */}
           <div className="relative z-[45] flex shrink-0 items-center gap-3 overflow-visible">
             <Button
               asChild
@@ -176,7 +188,7 @@ export function Navbar() {
                     avoidCollisions
                     collisionPadding={12}
                   >
-                    {/* Profile summary — not a menu row */}
+                    {/* Profile summary â€” not a menu row */}
                     <div className="border-b border-accent/10 px-3 py-3 animate-in fade-in slide-in-from-top-1 duration-300">
                       <div className="flex items-center gap-3 min-w-0">
                         {session.user?.image ? (
@@ -202,7 +214,7 @@ export function Navbar() {
                               "Account"}
                           </p>
                           <p className="truncate text-xs text-accent/70" title={session.user?.email ?? undefined}>
-                            {session.user?.email ?? "—"}
+                            {session.user?.email ?? "â€”"}
                           </p>
                         </div>
                       </div>
@@ -278,7 +290,7 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile menu – animated toggle (slide down + fade) */}
+        {/* Mobile menu â€“ animated toggle (slide down + fade) */}
         <div
           className={cn(
             "md:hidden overflow-hidden border-t bg-[#f5efe6] transition-all duration-300 ease-out",
@@ -406,3 +418,8 @@ export function Navbar() {
     </>
   );
 }
+
+
+
+
+

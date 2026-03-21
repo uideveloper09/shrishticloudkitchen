@@ -87,14 +87,8 @@ export const menuItems: MenuItem[] = [
     category: "sides",
     description: "Tangy homemade mixed vegetable pickle.",
   },
-  {
-    id: "butter",
-    title: "Butter (1 pc)",
-    price: 15,
-    image: IMG("butter.jpeg"),
-    category: "sides",
-    description: "Fresh butter to top your paratha.",
-  },
 ];
 
 export const popularParathas = menuItems.filter((m) => m.category === "paratha").slice(0, 4);
+
+
