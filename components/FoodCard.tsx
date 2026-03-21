@@ -13,6 +13,9 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/providers/toast-provider";
 
+/** TODO: set true when all `public/images/...` paths work on production */
+const SHOW_CARD_IMAGE = false;
+
 interface FoodCardProps {
   item: MenuItem;
   showQuantity?: boolean;
@@ -52,18 +55,20 @@ export function FoodCard({
       )}
     >
       <Link href={`/menu#${item.id}`} className="block no-underline text-inherit hover:text-inherit">
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-secondary/80">
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-300 hover:scale-105"
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAgEDBAMBAAAAAAAAAAAAAQIDAAQRBRIhMQYTQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEEA/AN+iiirnM//Z"
-          />
-        </div>
-        <CardHeader className="pb-1">
+        {SHOW_CARD_IMAGE ? (
+          <div className="relative aspect-[4/3] w-full overflow-hidden bg-secondary/80">
+            <Image
+              src={item.image}
+              alt={item.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 hover:scale-105"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAgEDBAMBAAAAAAAAAAAAAQIDAAQRBRIhMQYTQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEEA/AN+iiirnM//Z"
+            />
+          </div>
+        ) : null}
+        <CardHeader className={cn("pb-1", !SHOW_CARD_IMAGE && "pt-4")}>
           <h3 className="font-semibold text-accent line-clamp-1">{item.title}</h3>
           {item.description && (
             <p className="text-xs text-accent/70 line-clamp-2">
