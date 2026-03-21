@@ -241,7 +241,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {[
               "image1.jpeg",
-              "image4.jpeg",
+              "paneer-parathas.png",
               "image3.jpeg",
               "image2.jpeg",
             ].map((id, i) => (
