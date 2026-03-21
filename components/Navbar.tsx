@@ -129,7 +129,7 @@ export function Navbar() {
             <Button
               asChild
               size="sm"
-              className="hidden sm:inline-flex bg-[#b22222] hover:bg-[#9a1d1d] text-white hover:text-white rounded-lg px-5 font-medium shadow-sm"
+              className="hidden sm:inline-flex bg-[#b22222] hover:bg-[#9a1d1d] text-white rounded-lg px-5 font-medium shadow-sm"
             >
               <Link href="/order">Order Online</Link>
             </Button>
@@ -254,7 +254,7 @@ export function Navbar() {
                 </Button>
                 <Button
                   size="sm"
-                  className="bg-[#b22222] hover:bg-[#9a1d1d] text-white hover:text-white min-h-11"
+                  className="bg-[#b22222] hover:bg-[#9a1d1d] text-white"
                   onClick={() => {
                     setLoginCallbackUrl("/");
                     setAuthDrawerView("login");

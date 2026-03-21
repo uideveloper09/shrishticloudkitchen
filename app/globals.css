@@ -48,8 +48,16 @@ a {
   text-decoration: none;
 }
 
-/* Don’t set a global link hover color — it breaks red CTAs (red text on red bg).
-   Use Tailwind hover: on nav, footer, and buttons instead. */
+/* Nav / inline links — not red CTAs (those use text-white on red bg) */
+a:hover {
+  color: var(--primary);
+}
+
+/* Primary CTA: <a> has text-white + bg red; global a:hover was turning text red-on-red (invisible) */
+a.text-white:hover,
+a.text-primary-foreground:hover {
+  color: #ffffff !important;
+}
 
 /* Base button reset */
 button {
